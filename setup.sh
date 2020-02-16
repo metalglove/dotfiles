@@ -18,8 +18,9 @@ function install_app()
 			# echo new line
 			echo ""
 			if [[ "$yesno" = "y" || "$yesno" = "Y" ]]; then
-				#app-get install $i
-				echo "Installing $i"
+				echo "Installing $i..."
+				app-get install $i
+				echo "Installed $i!"
 			else
 				echo "Aborting."
 				exit 1;
@@ -30,18 +31,19 @@ function install_app()
 	done
 }
 
+# TODO: custom dunst config?
 echo "Checking if required packages are installed..."
-# check for installed i3-gaps, i3status, i3fancy-lock, compton, alacritty, nitrogen
-# actual apps blueman, jetbrains-toolbox, spotify, google-chrome, discord, gitkraken, mailspring
-install_app i3-gaps i3status i3lock-fancy compton alacritty nitrogen
+# Check for installed i3-gaps, i3status, i3fancy-lock, compton, alacritty, nitrogen, dunst
+# Actual apps that I run are blueman, jetbrains-toolbox, visual studio code, spotify, google-chrome, discord, gitkraken, mailspring, pavucontrol
+install_app i3-gaps i3status i3lock-fancy compton alacritty nitrogen dunst
 
-# Check if the aliases are set up
 function append_aliases()
 {
 	echo ". ~/.config/glovali_config/aliases.sh" > ~/.bash_aliases
 	echo 'Appended aliases!'
 }
 
+# Check if the aliases are set up
 if [ -f ~/.bash_aliases ]; then
 	if ! grep -q ". ~/.config/glovali_config/aliases.sh" ~/.bash_aliases; then
 		append_aliases
@@ -55,4 +57,3 @@ else
 fi
 
 echo 'Completed setup!'
-
